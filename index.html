@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TheStrainLab | Web3 Origins NFT DAO</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { background: #000; color: #fff; font-family: 'Courier New', monospace; }
+        
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+        
+        /* HERO */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            padding-top: 80px;
+        }
+        
+        .hero-content {
+            text-align: center;
+            z-index: 10;
+            position: relative;
+        }
+        
+        .hero h1 {
+            font-size: 72px;
+            margin-bottom: 16px;
+            color: #86efac;
+            font-weight: bold;
+            letter-spacing: -2px;
+        }
+        
+        .hero h2 {
+            font-size: 32px;
+            color: rgba(134, 239, 172, 0.8);
+            margin-bottom: 24px;
+        }
+        
+        .hero p {
+            font-size: 14px;
+            color: rgba(134, 239, 172, 0.7);
+            margin-bottom: 32px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 48px;
+        }
+        
+        .button {
+            padding: 12px 32px;
+            border: 1px solid #10b981;
+            background: rgba(16, 185, 129, 0.2);
+            color: #86efac;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+        }
+        
+        .button:hover {
+            background: rgba(16, 185, 129, 0.3);
+            box-shadow: 0 0 30px rgba(0, 255, 200, 0.5);
+        }
+        
+        .scroll-hint {
+            animation: bounce 2s infinite;
+            font-size: 12px;
+            color: rgba(134, 239, 172, 0.6);
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(10px); }
+        }
+        
+        /* SECTIONS */
+        section {
+            padding: 80px 0;
+        }
+        
+        section h2 {
+            font-size: 48px;
+            color: #86efac;
+            margin-bottom: 32px;
+            font-weight: bold;
+        }
+        
+        .section-divider {
+            width: 80px;
+            height: 4px;
+            background: rgba(16, 185, 129, 0.4);
+            margin-bottom: 32px;
+        }
+        
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+            margin-top: 32px;
+        }
+        
+        .card {
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            padding: 32px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, rgba(0, 255, 200, 0.1), rgba(0, 150, 150, 0.1));
+            animation: glow-pulse 3s infinite;
+        }
+        
+        @keyframes glow-pulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(0, 255, 200, 0.3); }
+            50% { box-shadow: 0 0 40px rgba(0, 255, 200, 0.6); }
+        }
+        
+        .card h3 {
+            color: #86efac;
+            margin-bottom: 16px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        
+        .card p {
+            color: rgba(134, 239, 172, 0.7);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        
+        .faq-item {
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            margin-bottom: 16px;
+            border-radius: 8px;
+            overflow: hidden;
+            background: linear-gradient(135deg, rgba(0, 255, 200, 0.1), rgba(0, 150, 150, 0.1));
+        }
+        
+        .faq-button {
+            width: 100%;
+            padding: 20px;
+            background: none;
+            border: none;
+            color: #86efac;
+            text-align: left;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            font-size: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .faq-button:hover {
+            background: rgba(16, 185, 129, 0.1);
+        }
+        
+        .faq-content {
+            display: none;
+            padding: 0 20px 20px 20px;
+            color: rgba(134, 239, 172, 0.7);
+            border-top: 1px solid rgba(16, 185, 129, 0.2);
+            line-height: 1.6;
+        }
+        
+        .faq-content.active {
+            display: block;
+        }
+        
+        .faq-icon {
+            transition: transform 0.3s;
+        }
+        
+        .faq-icon.active {
+            transform: rotate(180deg);
+        }
+        
+        footer {
+            border-top: 1px solid rgba(16, 185, 129, 0.2);
+            padding: 48px 0;
+            text-align: center;
+            color: rgba(134, 239, 172, 0.6);
+            font-size: 12px;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 24px;
+            margin-top: 32px;
+        }
+        
+        .stat-box {
+            background: linear-gradient(135deg, rgba(0, 255, 200, 0.1), rgba(0, 150, 150, 0.1));
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            padding: 24px;
+            text-align: center;
+            border-radius: 8px;
+        }
+        
+        .stat-number {
+            font-size: 32px;
+            color: #86efac;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: rgba(134, 239, 172, 0.6);
+        }
+        
+        .form-group {
+            margin-bottom: 24px;
+        }
+        
+        .form-group label {
+            display: block;
+            color: #86efac;
+            font-weight: bold;
+            margin-bottom: 8px;
+            font-size: 12px;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: #86efac;
+            font-family: 'Courier New', monospace;
+            border-radius: 4px;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #10b981;
+        }
+        
+        .form-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 48px; }
+            .hero h2 { font-size: 24px; }
+            section h2 { font-size: 32px; }
+            .button-group { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Web3 Origins</h1>
+            <h2>coming to make the mutation.</h2>
+            <p>156 Carriers. 1 DAO. Against Mission Obvious.</p>
+            <p>Sustainable NFT economics. Real governance. No hype.</p>
+            <div class="button-group">
+                <a href="#join" class="button">Join Pre-Launch</a>
+                <a href="#problem" class="button">Learn More</a>
+            </div>
+            <div class="scroll-hint">↓ Scroll to explore</div>
+        </div>
+    </section>
+
+    <!-- PROBLEM -->
+    <section id="problem" class="container">
+        <h2>The Problem.</h2>
+        <div class="section-divider"></div>
+        <div class="grid-3">
+            <div class="card">
+                <h3>Hype Economy</h3>
+                <p>Projects launch on speculation. Founders exit. Community left holding bags.</p>
+            </div>
+            <div class="card">
+                <h3>Extractive Model</h3>
+                <p>Royalties disappear into founders' wallets. No passive income for holders.</p>
+            </div>
+            <div class="card">
+                <h3>Centralized Control</h3>
+                <p>Major decisions made by 1-2 people. Community has no real voice.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SOLUTION -->
+    <section class="container">
+        <h2>The Solution.</h2>
+        <div class="section-divider"></div>
+        <div class="grid-3">
+            <div class="card">
+                <h3>Dual-Royalty System</h3>
+                <p>Every trade generates two revenue streams: royalties fund passive rewards + sustainable treasury. Economics work on day 1.</p>
+            </div>
+            <div class="card">
+                <h3>Cytoplasm Rewards</h3>
+                <p>Hold an NFT, earn passive Cytoplasm NFTs every 30 days. Claimable, tradeable, no KYC. Real passive income.</p>
+            </div>
+            <div class="card">
+                <h3>1 Carrier = 1 Founder</h3>
+                <p>Every NFT holder votes on expansion, artist partnerships, treasury allocation. True community ownership.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ECONOMICS -->
+    <section class="container">
+        <h2>Economics.</h2>
+        <div class="section-divider"></div>
+        <div class="stats">
+            <div class="stat-box">
+                <div class="stat-number">$5,403</div>
+                <div class="stat-label">Carrier Zero (Founder)</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">$5,403</div>
+                <div class="stat-label">Nox (Co-Founder)</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">$16,210</div>
+                <div class="stat-label">Treasury Reserve</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">$7,621</div>
+                <div class="stat-label">Community (Royalty)</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">$1</div>
+                <div class="stat-label">Standing Buy-Back per Cytoplasm</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">70% / 30%</div>
+                <div class="stat-label">Royalty Split (Holders / Treasury)</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GOVERNANCE -->
+    <section class="container">
+        <h2>Governance.</h2>
+        <div class="section-divider"></div>
+        <div class="card">
+            <h3>156 Carriers. 1 Vote Each.</h3>
+            <p><strong>Current Phase:</strong> Pre-Launch. Origins whitelist confirmed. 24 Carriers have guaranteed free access.</p>
+            <p style="margin-top: 16px;"><strong>Post-Mint Governance:</strong> When all 156 sell, Carriers vote on expansion. Options: Conservative (198), Aggressive (300), Gradual (500), Cap (900), or Organic Only.</p>
+            <p style="margin-top: 16px;"><strong>Voting Platform:</strong> X Polls. Transparent. Public results. Every vote counts equally.</p>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="container">
+        <h2>Questions.</h2>
+        <div class="section-divider"></div>
+        <div style="max-width: 800px; margin: 0 auto;">
+            <div class="faq-item">
+                <button class="faq-button" onclick="toggleFaq(0)">
+                    What's Cytoplasm?
+                    <span class="faq-icon">⌄</span>
+                </button>
+                <div class="faq-content">Claimable NFTs earned passively every 30 days. Generated from trading volume of your NFT. Worth ~$1 each on secondary market. Real passive income without crypto volatility.</div>
+            </div>
+            
+            <div class="faq-item">
+                <button class="faq-button" onclick="toggleFaq(1)">
+                    How does dual-royalty work?
+                    <span class="faq-icon">⌄</span>
+                </button>
+                <div class="faq-content">Every time an NFT trades: 15% goes to project. Half that (7.5%) converts to Cytoplasm for holders. Other half (7.5%) funds treasury operations. Both reward holders and sustain the project.</div>
+            </div>
+            
+            <div class="faq-item">
+                <button class="faq-button" onclick="toggleFaq(2)">
+                    How does governance voting work?
+                    <span class="faq-icon">⌄</span>
+                </button>
+                <div class="faq-content">1 NFT = 1 vote on X Polls. Every major decision (expansion, artist partnerships, treasury allocation) voted by Carriers. Not founder decides. Community decides.</div>
+            </div>
+            
+            <div class="faq-item">
+                <button class="faq-button" onclick="toggleFaq(3)">
+                    When's the mint?
+                    <span class="faq-icon">⌄</span>
+                </button>
+                <div class="faq-content">Launch timing: TBD (tracking organic interest first). Tier 1 at $10.1. Origins get free whitelist access. No rush. Quercia philosophy: slow sustainable growth.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- JOIN -->
+    <section id="join" class="container">
+        <h2>Join.</h2>
+        <div class="section-divider"></div>
+        <div class="form-container">
+            <form>
+                <div class="form-group">
+                    <label>Wallet Address</label>
+                    <input type="text" placeholder="0x..." />
+                </div>
+                <div class="form-group">
+                    <label>Twitter Handle</label>
+                    <input type="text" placeholder="@yourhandle" />
+                </div>
+                <div class="form-group">
+                    <label>Why TheStrainLab?</label>
+                    <textarea rows="4" placeholder="What draws you to this project?"></textarea>
+                </div>
+                <button type="submit" class="button" style="width: 100%;">Request Whitelist Access</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>TheStrainLab. Against Mission Obvious.</p>
+        <p style="margin-top: 8px;">Quercia, not ibisco. 🧬</p>
+    </footer>
+
+    <script>
+        function toggleFaq(index) {
+            const faqs = document.querySelectorAll('.faq-item');
+            const content = faqs[index].querySelector('.faq-content');
+            const icon = faqs[index].querySelector('.faq-icon');
+            content.classList.toggle('active');
+            icon.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>
